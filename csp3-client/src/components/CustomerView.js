@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { Grid, Container, Typography } from '@mui/material';
 import Product from '../components/Product';
-import { Row } from 'react-bootstrap';
 import ProductSearch from './ProductSearch';
 
 export default function CustomerView() {
@@ -15,10 +15,11 @@ export default function CustomerView() {
         if (isMounted) {
           const productsArr = productsData.map((productData) =>
             productData.isActive === true ? (
-              <Product data={productData} key={productData._id} breakPoint={4} />
+              <Grid item xs={12} sm={6} md={4} lg={3} key={productData._id}>
+                <Product data={productData} />
+              </Grid>
             ) : null
           );
-
           setProducts(productsArr);
         }
       });
@@ -26,14 +27,17 @@ export default function CustomerView() {
     return () => {
       isMounted = false;
     };
-  }, []); // No need to have products in the dependency array
+  }, []);
 
   return (
-    <React.Fragment>
-
+    <Container maxWidth="xl" sx={{ py: 4 }}>
       <ProductSearch />
-      <h2 className="text-center my-4">Our Products</h2>
-      <Row>{products}</Row>
-    </React.Fragment>
+      <Typography variant="h4" component="h2" gutterBottom align="center" sx={{ mb: 4 }}>
+        UA Shop Products
+      </Typography>
+      <Grid container spacing={3}>
+        {products}
+      </Grid>
+    </Container>
   );
 }

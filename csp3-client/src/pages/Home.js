@@ -1,25 +1,31 @@
 import React from 'react';
 import Banner from '../components/Banner';
 import Highlights from '../components/Highlights';
-import { Container } from 'react-bootstrap';
+import { Container, Paper, Typography, Box, Stack } from '@mui/material';
 
-export default function Home(){
+export default function Home() {
+  const pageData = {
+    title: "The UA Shop",
+    content: "Products for everyone, everywhere",
+    destination: "/products",
+    label: "Browse Products"
+  };
 
-    const pageData = {
-        title: "The UA Shop",
-        content: "Products for everyone, everywhere",
-        destination: "/products",
-        label: "Browse Products"
-    };
+  return (
+    <React.Fragment>
+      {/* Assuming Banner returns a hero/jumbotron-like component */}
+      <Banner data={pageData} />
 
-    return(
-        <React.Fragment>
-            <Banner data={pageData}/>
-            <Container fluid>
-                <h2 className="text-center mb-4">Featured Products</h2>
-                <Highlights/>
-            </Container>
-        </React.Fragment>
-    );
-    
+      <Container maxWidth="lg" sx={{ mt: 6 }}>
+        <Paper elevation={3} sx={{ p: 4, mb: 6 }}>
+          <Typography variant="h4" align="center" gutterBottom fontWeight={600}>
+            Featured Products
+          </Typography>
+          <Box sx={{ mt: 4 }}>
+            <Highlights />
+          </Box>
+        </Paper>
+      </Container>
+    </React.Fragment>
+  );
 }

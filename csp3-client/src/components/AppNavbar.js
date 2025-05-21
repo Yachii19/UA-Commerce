@@ -1,61 +1,72 @@
 import React, { useContext } from 'react';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
+import { AppBar, Toolbar, Typography, Button, IconButton, Badge } from '@mui/material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import UserContext from '../UserContext';
 
-export default function AppNavBar(){
+export default function AppNavBar() {
+  const { user } = useContext(UserContext);
 
-    const { user } = useContext(UserContext);
-
-    return(
-        <Navbar bg="secondary" variant="dark" expand="lg">
-            <Link className="navbar-brand" to="/">The UA Shop</Link>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="mr-auto">
-                    <Link className="nav-link" to="/products">
-                        {user.isAdmin === true ?
-                                <span>Admin Dashboard</span>
-                            :
-                                <span>Products</span>
-                        }   
-                    </Link>
-                </Nav>
-                <Nav className="ms-auto">
-                    {user.id !== null ? 
-                            user.isAdmin === true ? 
-                                    <Link className="nav-link" to="/logout">
-                                        Log Out
-                                    </Link>
-                                :
-                                    <React.Fragment>
-                                        <Link className="nav-link" to="/cart">
-                                            Cart
-                                        </Link>
-                                        <Link className="nav-link" to="/orders">
-                                            Orders
-                                        </Link>
-                                        <Link className="nav-link" to="/profile">
-                                            Profile
-                                        </Link>
-                                        <Link className="nav-link" to="/logout">
-                                            Log Out
-                                        </Link>
-                                    </React.Fragment>
-                        :
-                            <React.Fragment>
-                                <Link className="nav-link" to={{pathname: '/login', state: { from: 'navbar'}}}>
-                                    Log In
-                                </Link>
-                                <Link className="nav-link" to="/register">
-                                    Register
-                                </Link>
-                            </React.Fragment>
-                    }               
-                </Nav>
-            </Navbar.Collapse>
-        </Navbar>
-    );
-    
+  return (
+    <AppBar position="static" style={{ backgroundColor: '#003366' }}>
+      <Container>
+        <Toolbar>
+          <Typography variant="h6" component={Link} to="/" style={{ flexGrow: 1, color: 'white', textDecoration: 'none' }}>
+            UA Shop
+          </Typography>
+          
+          <Nav>
+            <Button 
+              color="inherit" 
+              component={Link} 
+              to="/products" 
+              style={{ marginRight: '16px' }}
+            >
+              {user.isAdmin ? 'Admin Dashboard' : 'Products'}
+            </Button>
+            
+            {user.id !== null ? (
+              user.isAdmin ? (
+                <Button color="inherit" component={Link} to="/logout">
+                  Log Out
+                </Button>
+              ) : (
+                <>
+                  <IconButton 
+                    color="inherit" 
+                    component={Link} 
+                    to="/cart" 
+                    style={{ marginRight: '8px' }}
+                  >
+                    <Badge badgeContent={user.cartCount || 0} color="secondary">
+                      <ShoppingCartIcon />
+                    </Badge>
+                  </IconButton>
+                  <Button color="inherit" component={Link} to="/orders" style={{ marginRight: '16px' }}>
+                    Orders
+                  </Button>
+                  <Button color="inherit" component={Link} to="/profile" style={{ marginRight: '16px' }}>
+                    Profile
+                  </Button>
+                  <Button color="inherit" component={Link} to="/logout">
+                    Log Out
+                  </Button>
+                </>
+              )
+            ) : (
+              <>
+                <Button color="inherit" component={Link} to="/login" style={{ marginRight: '16px' }}>
+                  Log In
+                </Button>
+                <Button color="inherit" component={Link} to="/register">
+                  Register
+                </Button>
+              </>
+            )}
+          </Nav>
+        </Toolbar>
+      </Container>
+    </AppBar>
+  );
 }

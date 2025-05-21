@@ -1,37 +1,56 @@
 import { useState, useEffect, useContext } from 'react';
-import { Card, Container, Button, InputGroup, FormControl } from 'react-bootstrap';
+import { 
+  Container, 
+  Card, 
+  CardMedia, 
+  CardContent, 
+  Typography, 
+  Button, 
+  Grid,
+  Box,
+  IconButton,
+  TextField
+} from '@mui/material';
 import { Link, useParams } from 'react-router-dom';
 import UserContext from '../UserContext';
 import Swal from 'sweetalert2';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-export default function Specific(){
+export default function Specific() {
+  const { user } = useContext(UserContext);
+  const { productId } = useParams();
 
-	const { user } = useContext(UserContext);
-	const { productId } = useParams();
+  const [id, setId] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [qty, setQty] = useState(1);
+  const [price, setPrice] = useState(0);
+  const [imageUrl, setImageUrl] = useState("");
 
-	const [id, setId] = useState("");
-	const [name, setName] = useState("");
-	const [description, setDescription] = useState("");
-	const [qty, setQty] = useState(1);
-	const [price, setPrice] = useState(0);
-
- useEffect(() => {
-    fetch(`${ process.env.REACT_APP_API_URL}/products/${ productId }`)
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/products/${productId}`)
       .then(res => res.json())
       .then(data => {
         setId(data._id);
         setName(data.name);
         setDescription(data.description);
         setPrice(data.price);
+        setImageUrl(data.imageUrl || '');
       });
   }, [productId]);
 
   const reduceQty = () => {
     if (qty <= 1) {
-      alert("Quantity can't be lower than 1.");
+      Swal.fire('Error', "Quantity can't be lower than 1", 'error');
     } else {
       setQty(qty - 1);
     }
+  };
+
+  const increaseQty = () => {
+    setQty(qty + 1);
   };
 
   const addToCart = () => {
@@ -94,49 +113,98 @@ export default function Specific(){
 	}
 
 	return (
-		<Container>
-			<Card className="mt-5">
-				<Card.Header className="bg-secondary text-white text-center pb-0"><h4>{name}</h4></Card.Header>
-				<Card.Body>
-					<Card.Text>{description}</Card.Text>
-					<h6>
-						Price: <span className="text-warning">₱{price}</span>
-					</h6>
-					<h6>Quantity:</h6>
-					<InputGroup className="qty mt-2 mb-1">
-						<InputGroup.Prepend className="d-none d-md-flex">
-							<Button variant="secondary" onClick={reduceQty}>
-								-
-							</Button>
-						</InputGroup.Prepend>
-						<FormControl 
-							type="number"
-							min="1"
-							value={qty}
-							onChange={e => qtyInput(e.target.value)}
-						/>
-						<InputGroup.Append className="d-none d-md-flex">
-							<Button
-								variant="secondary"
-								onClick={() => setQty(qty + 1)}
-							>
-								+
-							</Button>
-						</InputGroup.Append>
-					</InputGroup>
-				</Card.Body>
-				<Card.Footer>
-				{user.id !== null ? 
-						user.isAdmin === true ?
-								<Button variant="danger" block disabled>Admin can't Add to Cart</Button>
-							:
-								<Button variant="primary" block onClick={addToCart}>Add to Cart</Button>
-					: 
-						<Link className="btn btn-warning btn-block" to={{pathname: '/login', state: { from: 'cart'}}}>Log in to Add to Cart</Link>
-				}
-	      		</Card.Footer>
-			</Card>
-		</Container>
-	)
+    <Container maxWidth="md" sx={{ py: 4 }}>
+      <Button 
+        startIcon={<ArrowBackIcon />} 
+        component={Link} 
+        to="/products" 
+        sx={{ mb: 2 }}
+      >
+        Back to Products
+      </Button>
+      
+      <Card>
+        <Grid container>
+          {imageUrl && (
+            <Grid item xs={12} md={6}>
+              <CardMedia
+                component="img"
+                height="400"
+                image={imageUrl}
+                alt={name}
+                sx={{ objectFit: 'contain', p: 2, backgroundColor: '#f5f5f5' }}
+              />
+            </Grid>
+          )}
+          <Grid item xs={12} md={6}>
+            <CardContent>
+              <Typography variant="h4" component="h1" gutterBottom>
+                {name}
+              </Typography>
+              <Typography variant="body1" paragraph sx={{ mb: 3 }}>
+                {description}
+              </Typography>
+              <Typography variant="h5" color="primary" sx={{ mb: 3 }}>
+                ₱{price.toLocaleString()}
+              </Typography>
+              
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+                <Typography variant="subtitle1" sx={{ mr: 2 }}>
+                  Quantity:
+                </Typography>
+                <IconButton onClick={reduceQty}>
+                  <RemoveIcon />
+                </IconButton>
+                <TextField
+                  type="number"
+                  value={qty}
+                  onChange={(e) => setQty(Math.max(1, Number(e.target.value)))}
+                  sx={{ width: 80, mx: 1 }}
+                  inputProps={{ min: 1 }}
+                />
+                <IconButton onClick={increaseQty}>
+                  <AddIcon />
+                </IconButton>
+              </Box>
+              
+              {user.id !== null ? (
+                user.isAdmin ? (
+                  <Button 
+                    variant="contained" 
+                    fullWidth 
+                    size="large" 
+                    disabled
+                    sx={{ py: 1.5 }}
+                  >
+                    Admin cannot add to cart
+                  </Button>
+                ) : (
+                  <Button 
+                    variant="contained" 
+                    fullWidth 
+                    size="large" 
+                    onClick={addToCart}
+                    sx={{ py: 1.5 }}
+                  >
+                    Add to Cart
+                  </Button>
+                )
+              ) : (
+                <Button 
+                  variant="contained" 
+                  fullWidth 
+                  size="large" 
+                  component={Link}
+                  to={{ pathname: '/login', state: { from: 'cart' }}}
+                  sx={{ py: 1.5 }}
+                >
+                  Login to Add to Cart
+                </Button>
+              )}
+            </CardContent>
+          </Grid>
+        </Grid>
+      </Card>
+    </Container>
+  );
 }
-

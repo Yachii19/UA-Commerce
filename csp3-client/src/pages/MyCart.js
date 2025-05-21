@@ -1,7 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Jumbotron, InputGroup, Button, FormControl, Table } from 'react-bootstrap';
+import { 
+  Container, 
+  Table, 
+  TableBody, 
+  TableCell, 
+  TableContainer, 
+  TableHead, 
+  TableRow, 
+  Paper, 
+  Typography, 
+  Button, 
+  Box,
+  IconButton,
+  TextField
+} from '@mui/material';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
+import ClearAllIcon from '@mui/icons-material/ClearAll';
+import InputGroup from 'react-bootstrap/InputGroup';
+import FormControl from 'react-bootstrap/FormControl';
 
 export default function MyCart() {
 
@@ -274,50 +295,115 @@ const clearCart = () => {
 
 
 return (
-willRedirect === true ? (
-	<Redirect to="/orders" />
-	) : (
-	cart.length <= 0 ? (
-		<Jumbotron>
-			<h3 className="text-center">
-				Your cart is empty! <Link to="/products">Start shopping.</Link>
-			</h3>
-		</Jumbotron>
-		) 
-	: (
-		<Container>
-			<h2 className="text-center my-4">Your Shopping Cart</h2>
-			
-			<Table striped bordered hover responsive>
-				<thead className="bg-secondary text-white">
-					<tr>
-						<th>Name</th>
-						<th>Price</th>
-						<th>Quantity</th>
-						<th>Subtotal</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					{tableRows}
-					<tr>
-						<td colSpan="3">
-							<Button variant="success" block onClick={() => checkout()}>
-							Checkout
-							</Button>
-						</td>
-
-						<td colSpan="2">
-							<h3>Total: ₱{total}</h3>
-						</td>
-					</tr>
-				</tbody>
-			</Table>
-			 		<Button variant="danger" block onClick={clearCart}>
+    willRedirect ? (
+      <Redirect to="/orders" />
+    ) : cart.length <= 0 ? (
+      <Container maxWidth="md" sx={{ py: 4, textAlign: 'center' }}>
+        <Typography variant="h5" gutterBottom>
+          Your cart is empty
+        </Typography>
+        <Button 
+          variant="contained" 
+          component={Link} 
+          to="/products"
+          sx={{ mt: 2 }}
+        >
+          Start Shopping
+        </Button>
+      </Container>
+    ) : (
+      <Container maxWidth="lg" sx={{ py: 4 }}>
+        <Typography variant="h4" gutterBottom sx={{ mb: 4 }}>
+          Your Shopping Cart
+        </Typography>
+        
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead sx={{ backgroundColor: '#003366' }}>
+              <TableRow>
+                <TableCell sx={{ color: 'white' }}>Product</TableCell>
+                <TableCell sx={{ color: 'white' }}>Price</TableCell>
+                <TableCell sx={{ color: 'white' }}>Quantity</TableCell>
+                <TableCell sx={{ color: 'white' }}>Subtotal</TableCell>
+                <TableCell sx={{ color: 'white' }}>Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {cart.map((item) => (
+                <TableRow key={item.productId}>
+                  <TableCell>
+                    <Link 
+                      to={`/products/${item.productId}`} 
+                      style={{ textDecoration: 'none', color: 'inherit' }}
+                    >
+                      {item.productName}
+                    </Link>
+                  </TableCell>
+                  <TableCell>₱{item.price.toLocaleString()}</TableCell>
+                  <TableCell>
+                    <Box display="flex" alignItems="center">
+                      <IconButton onClick={() => updateQuantity(item.productId, item.quantity - 1)}>
+                        <RemoveIcon />
+                      </IconButton>
+                      <TextField
+                        type="number"
+                        value={item.quantity}
+                        onChange={(e) => updateQuantity(item.productId, e.target.value)}
+                        sx={{ width: 80, mx: 1 }}
+                        inputProps={{ min: 1 }}
+                      />
+                      <IconButton onClick={() => updateQuantity(item.productId, item.quantity + 1)}>
+                        <AddIcon />
+                      </IconButton>
+                    </Box>
+                  </TableCell>
+                  <TableCell>₱{(item.price * item.quantity).toLocaleString()}</TableCell>
+                  <TableCell>
+                    <IconButton 
+                      color="error" 
+                      onClick={() => removeFromCart(item.productId)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
+              <TableRow>
+                <TableCell colSpan={3} align="right">
+                  <Typography variant="h6">
+                    Total:
+                  </Typography>
+                </TableCell>
+                <TableCell colSpan={2}>
+                  <Typography variant="h6" color="primary">
+                    ₱{total.toLocaleString()}
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+        
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
+          <Button
+            variant="outlined"
+            color="error"
+            startIcon={<ClearAllIcon />}
+            onClick={clearCart}
+          >
             Clear Cart
           </Button>
-		</Container>
-		)
-		)
-	);
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<ShoppingCartCheckoutIcon />}
+            onClick={checkout}
+            sx={{ px: 4 }}
+          >
+            Checkout
+          </Button>
+        </Box>
+      </Container>
+    )
+  );
 }
