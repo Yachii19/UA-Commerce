@@ -73,13 +73,13 @@ export default function Profile() {
   }
 
   return (
-    <Box sx={{ backgroundColor: '#f5f5f5', minHeight: '100vh', py: 6 }}>
+    <Box sx={{ backgroundColor: '#f5f5f5', minHeight: '100vh', py: { xs: 2, md: 6 } }}>
       <Container maxWidth="lg">
         <Paper
           elevation={0}
           sx={{
             width: '100%',
-            p: { xs: 3, md: 4 },
+            p: { xs: 1, sm: 2, md: 4 },
             borderRadius: 0,
             backgroundColor: 'white',
             border: '1px solid #e5e5e5',
@@ -104,7 +104,7 @@ export default function Profile() {
               />
             </Box>
           ) : (
-            <Grid container spacing={4}>
+            <Grid container spacing={{ xs: 2, md: 4 }} direction={{ xs: 'column', md: 'row' }}>
               {/* Profile Section */}
               <Grid item xs={12} md={4}>
                 <Box
@@ -113,18 +113,20 @@ export default function Profile() {
                     flexDirection: 'column',
                     alignItems: 'center',
                     textAlign: 'center',
-                    p: 3,
+                    p: { xs: 2, sm: 2, md: 3 },
                     height: '100%',
-                    borderRight: isMobile ? 'none' : '1px solid #e5e5e5',
+                    borderRight: { xs: 'none', md: '1px solid #e5e5e5' },
+                    borderBottom: { xs: '1px solid #e5e5e5', md: 'none' },
+                    mb: { xs: 2, md: 0 },
                   }}
                 >
                   <Avatar
                     sx={{
                       bgcolor: 'black',
-                      width: 120,
-                      height: 120,
-                      mb: 3,
-                      fontSize: 50,
+                      width: { xs: 70, sm: 90, md: 120 },
+                      height: { xs: 70, sm: 90, md: 120 },
+                      mb: 2,
+                      fontSize: { xs: 32, sm: 40, md: 50 },
                     }}
                   >
                     {details?.firstName?.charAt(0).toUpperCase()}
@@ -137,7 +139,8 @@ export default function Profile() {
                       color: 'black',
                       mb: 1,
                       letterSpacing: 1,
-                      textTransform: 'uppercase'
+                      textTransform: 'uppercase',
+                      fontSize: { xs: '1.1rem', sm: '1.3rem', md: '1.5rem' },
                     }}
                   >
                     {details?.firstName} {details?.lastName}
@@ -148,21 +151,23 @@ export default function Profile() {
                     label={user.isAdmin ? "ADMINISTRATOR" : "STANDARD USER"}
                     variant="outlined"
                     sx={{ 
-                      mb: 3,
+                      mb: 2,
                       borderColor: 'black',
                       color: 'black',
                       fontWeight: 600,
                       borderRadius: 0,
-                      textTransform: 'uppercase'
+                      textTransform: 'uppercase',
+                      fontSize: { xs: '0.7rem', sm: '0.8rem', md: '0.9rem' },
+                      px: { xs: 1, sm: 2 },
                     }}
                   />
                   
                   <Box sx={{ width: '100%' }}>
                     <Divider sx={{ my: 2, bgcolor: '#e5e5e5' }} />
                     
-                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 1.5 }}>
-                      <Badge sx={{ color: 'black', mr: 1.5 }} />
-                      <Typography variant="body2" sx={{ color: '#666' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 1.5, justifyContent: { xs: 'center', md: 'flex-start' } }}>
+                      <Badge sx={{ color: 'black', mr: 1.5, fontSize: { xs: '1.1rem', md: '1.3rem' } }} />
+                      <Typography variant="body2" sx={{ color: '#666', fontSize: { xs: '0.85rem', md: '1rem' } }}>
                         MEMBER SINCE: {new Date(details?.createdAt).toLocaleDateString()}
                       </Typography>
                     </Box>
@@ -172,7 +177,7 @@ export default function Profile() {
 
               {/* Details Section */}
               <Grid item xs={12} md={8}>
-                <Box sx={{ mb: 4 }}>
+                <Box sx={{ mb: { xs: 2, md: 4 } }}>
                   <Typography 
                     variant="h6" 
                     sx={{ 
@@ -182,17 +187,18 @@ export default function Profile() {
                       display: 'flex',
                       alignItems: 'center',
                       letterSpacing: 1,
-                      textTransform: 'uppercase'
+                      textTransform: 'uppercase',
+                      fontSize: { xs: '1rem', md: '1.2rem' },
                     }}
                   >
-                    <AccountCircle sx={{ mr: 1, color: 'black' }} />
+                    <AccountCircle sx={{ mr: 1, color: 'black', fontSize: { xs: '1.2rem', md: '1.5rem' } }} />
                     PERSONAL INFORMATION
                   </Typography>
                   
                   <Paper 
                     elevation={0}
                     sx={{
-                      p: 3,
+                      p: { xs: 1.5, sm: 2, md: 3 },
                       borderRadius: 0,
                       backgroundColor: 'white',
                       border: '1px solid #e5e5e5'
@@ -202,11 +208,11 @@ export default function Profile() {
                       <ListItem 
                         disablePadding 
                         sx={{ 
-                          py: 1.5,
+                          py: { xs: 1, md: 1.5 },
                           borderBottom: '1px solid #e5e5e5'
                         }}
                       >
-                        <Email sx={{ color: 'black', mr: 2, fontSize: '1.5rem' }} />
+                        <Email sx={{ color: 'black', mr: 2, fontSize: { xs: '1.1rem', md: '1.5rem' } }} />
                         <ListItemText 
                           primary="EMAIL ADDRESS" 
                           secondary={details?.email || "Not provided"}
@@ -214,20 +220,21 @@ export default function Profile() {
                             sx: { 
                               fontWeight: 700,
                               color: 'black',
-                              letterSpacing: 1
+                              letterSpacing: 1,
+                              fontSize: { xs: '0.95rem', md: '1.05rem' },
                             } 
                           }}
                           secondaryTypographyProps={{ 
                             sx: { 
                               color: '#666',
-                              fontSize: '0.95rem'
+                              fontSize: { xs: '0.85rem', md: '0.95rem' },
                             } 
                           }}
                         />
                       </ListItem>
                       
-                      <ListItem disablePadding sx={{ py: 1.5 }}>
-                        <Phone sx={{ color: 'black', mr: 2, fontSize: '1.5rem' }} />
+                      <ListItem disablePadding sx={{ py: { xs: 1, md: 1.5 } }}>
+                        <Phone sx={{ color: 'black', mr: 2, fontSize: { xs: '1.1rem', md: '1.5rem' } }} />
                         <ListItemText 
                           primary="MOBILE NUMBER" 
                           secondary={details?.mobileNo || "Not provided"}
@@ -235,13 +242,14 @@ export default function Profile() {
                             sx: { 
                               fontWeight: 700,
                               color: 'black',
-                              letterSpacing: 1
+                              letterSpacing: 1,
+                              fontSize: { xs: '0.95rem', md: '1.05rem' },
                             } 
                           }}
                           secondaryTypographyProps={{ 
                             sx: { 
                               color: '#666',
-                              fontSize: '0.95rem'
+                              fontSize: { xs: '0.85rem', md: '0.95rem' },
                             } 
                           }}
                         />
@@ -250,7 +258,7 @@ export default function Profile() {
                   </Paper>
                 </Box>
 
-                <Divider sx={{ my: 4, bgcolor: '#e5e5e5', height: '2px' }} />
+                <Divider sx={{ my: { xs: 2, md: 4 }, bgcolor: '#e5e5e5', height: '2px' }} />
 
                 <Box>
                   <Typography 
@@ -262,17 +270,18 @@ export default function Profile() {
                       display: 'flex',
                       alignItems: 'center',
                       letterSpacing: 1,
-                      textTransform: 'uppercase'
+                      textTransform: 'uppercase',
+                      fontSize: { xs: '1rem', md: '1.2rem' },
                     }}
                   >
-                    <Edit sx={{ mr: 1, color: 'black' }} />
+                    <Edit sx={{ mr: 1, color: 'black', fontSize: { xs: '1.2rem', md: '1.5rem' } }} />
                     ACCOUNT SECURITY
                   </Typography>
                   
                   <Paper 
                     elevation={0}
                     sx={{
-                      p: 3,
+                      p: { xs: 1.5, sm: 2, md: 3 },
                       borderRadius: 0,
                       backgroundColor: 'white',
                       border: '1px solid #e5e5e5'
