@@ -32,11 +32,11 @@ export default function Highlights() {
   }, []);
 
   return (
-    <Box sx={{ py: { xs: 4, md: 7 }, px: { xs: 1, md: 4 }, bgcolor: 'background.default', borderRadius: 4, my: 5 }}>
-      <Grid container spacing={4} justifyContent="center" alignItems="stretch">
+    <Box sx={{ py: { xs: 4, md: 7 }, bgcolor: 'background.default', borderRadius: 4, my: 5}}>
+      <Grid container spacing={4} justifyContent="flex-start" alignItems="stretch">
         {previews.length > 0 ? (
           previews.map((product, idx) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={product.key || idx} display="flex">
+            <Grid item xs={12} sm={6} md={3} lg={3} xl={3} key={product.key || idx} display="flex">
               {product}
             </Grid>
           ))

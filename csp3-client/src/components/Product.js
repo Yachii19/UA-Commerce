@@ -23,7 +23,7 @@ export default function Product(props) {
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
-        borderRadius: 0, // SHEIN uses sharp corners
+        borderRadius: 0, 
         boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
         transition: 'transform 0.2s',
         '&:hover': {
@@ -95,7 +95,7 @@ export default function Product(props) {
             borderRadius: 0, // Sharp corners
             px: 3,
             fontWeight: 600,
-            textTransform: 'uppercase', // SHEIN uses uppercase buttons
+            textTransform: 'uppercase', 
             boxShadow: 'none',
             width: '100%',
             backgroundColor: 'black',
