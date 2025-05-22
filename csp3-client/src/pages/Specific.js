@@ -138,7 +138,7 @@ export default function Specific() {
       <Button 
         startIcon={<ArrowBackIcon />} 
         component={Link} 
-        to="/products" 
+        to="/" 
         sx={{ 
           mb: 2,
           color: blackMain,
