@@ -22,7 +22,7 @@ const productSchema = new mongoose.Schema({
         type: String,
         validate: {
             validator: function(v) {
-                return /^(https?:\/\/).+\.(jpg|jpeg|png|gif|webp)$/i.test(v);
+                return /^https?:\/\/.+\.(jpg|jpeg|png|webp)(\?.*)?$/i.test(v);
             },
             message: props => `${props.value} is not a valid image URL!`
         },
