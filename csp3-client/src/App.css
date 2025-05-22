@@ -16,6 +16,9 @@
   object-fit: cover;
   background-size: cover;
   color: #fff;
+
+  margin: 1rem;
+  border-radius: 1rem;
 }
 
 

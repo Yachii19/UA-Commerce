@@ -31,15 +31,15 @@ export default function AppNavBar() {
   const isAdmin = user && user.isAdmin;
   const navLinks = isAdmin
     ? [
-        { label: 'Admin', to: '/products', icon: <StorefrontIcon style={{ color: '#fff' }} /> },
-        { label: 'Profile', to: '/profile', icon: <AccountCircleIcon style={{ color: '#fff' }} /> },
+        { label: 'Admin', to: '/products', icon: <StorefrontIcon style={{ color: '#000' }} /> },
+        { label: 'Profile', to: '/profile', icon: <AccountCircleIcon style={{ color: '#000' }} /> },
       ]
     : isLoggedIn
       ? [
-          { label: 'Products', to: '/products', icon: <StorefrontIcon style={{ color: '#fff' }} /> },
-          { label: 'Orders', to: '/orders', icon: <ListAltIcon style={{ color: '#fff' }} /> },
-          { label: 'Profile', to: '/profile', icon: <AccountCircleIcon style={{ color: '#fff' }} /> },
-          { label: 'Cart', to: '/cart', icon: <ShoppingCartIcon style={{ color: '#fff'}} /> },
+          { label: 'Products', to: '/products', icon: <StorefrontIcon style={{ color: '#000' }} /> },
+          { label: 'Orders', to: '/orders', icon: <ListAltIcon style={{ color: '#000' }} /> },
+          { label: 'Profile', to: '/profile', icon: <AccountCircleIcon style={{ color: '#000' }} /> },
+          { label: 'Cart', to: '/cart', icon: <ShoppingCartIcon style={{ color: '#000'}} /> },
         ]
       : [
           { label: 'Register', to: '/register' },
@@ -47,35 +47,35 @@ export default function AppNavBar() {
         ];
 
   return (
-    <AppBar position="static" style={{ backgroundColor: '#000', boxShadow: 'none', }}>
+    <AppBar position="static" style={{ backgroundColor: '#fff', boxShadow: 'none' }}>
       <Container>
         <Toolbar>
-          <Typography variant="h6" component={Link} to="/" style={{ flexGrow: 1, color: '#fff', textDecoration: 'none', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+          <Typography variant="h6" component={Link} to="/" style={{ flexGrow: 1, color: '#000', textDecoration: 'none', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
             UA Shop
           </Typography>
           {isMobile ? (
             <>
-              <IconButton edge="end" color="inherit" aria-label="menu" onClick={handleDrawerToggle}>
+              <IconButton edge="end" style={{ color: '#000' }} aria-label="menu" onClick={handleDrawerToggle}>
                 <MenuIcon />
               </IconButton>
               <Drawer anchor="right" open={drawerOpen} onClose={handleDrawerToggle}
-                PaperProps={{ sx: { backgroundColor: '#000', color: '#fff', p: 2 } }}>
+                PaperProps={{ sx: { backgroundColor: '#fff', color: '#000', p: 2 } }}>
                 <List sx={{ width: 240 }}>
                   {navLinks.map((item) => (
                     <ListItem key={item.label} disablePadding>
-                      <ListItemButton component={Link} to={item.to} onClick={handleDrawerToggle} sx={{ color: '#fff', py: 1.5 }}>
+                      <ListItemButton component={Link} to={item.to} onClick={handleDrawerToggle} sx={{ color: '#000', py: 1.5, backgroundColor: '#fff', '&:hover': { backgroundColor: '#f5f5f5' } }}>
                         {item.icon ? (
-                          <Box sx={{ minWidth: 32, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>{item.icon}</Box>
+                          <Box sx={{ minWidth: 32, display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#000' }}>{item.icon}</Box>
                         ) : null}
-                        <ListItemText primary={item.label} sx={{ ml: item.icon ? 1 : 0 }} />
+                        <ListItemText primary={item.label} sx={{ ml: item.icon ? 1 : 0, color: '#000' }} />
                       </ListItemButton>
                     </ListItem>
                   ))}
                   {isLoggedIn && (
                     <ListItem disablePadding>
-                      <ListItemButton component={Link} to="/logout" onClick={handleDrawerToggle} sx={{ justifyContent: 'center', mt: 2, backgroundColor: '#E71C4F', color: '#fff', borderRadius: 0, '&:hover': { backgroundColor: '#b31338' }, display: 'flex', alignItems: 'center' }}>
+                      <ListItemButton component={Link} to="/logout" onClick={handleDrawerToggle} sx={{ justifyContent: 'center', mt: 2, backgroundColor: '#000', color: '#fff', borderRadius: 0, '&:hover': { backgroundColor: '#222' }, display: 'flex', alignItems: 'center' }}>
                         <LogoutIcon style={{ color: '#fff', marginRight: 4 }} />
-                        <ListItemText primary="Log Out" sx={{ textAlign: 'center', fontWeight: 700, ml: 0 }} />
+                        <ListItemText primary="Log Out" sx={{ textAlign: 'center', fontWeight: 700, ml: 0, color: '#fff' }} />
                       </ListItemButton>
                     </ListItem>
                   )}
@@ -91,7 +91,7 @@ export default function AppNavBar() {
                     color="inherit"
                     component={Link}
                     to={item.to}
-                    style={{ marginRight: '8px', color: '#fff' }}
+                    style={{ marginRight: '8px', color: '#000', background: '#fff' }}
                   >
                     {item.icon}
                   </IconButton>
@@ -101,7 +101,7 @@ export default function AppNavBar() {
                     color="inherit"
                     component={Link}
                     to={item.to}
-                    style={{ marginRight: '8px', color: '#fff', fontWeight: 700, textTransform: 'uppercase', background: 'none', boxShadow: 'none' }}
+                    style={{ marginRight: '8px', color: '#000', fontWeight: 700, textTransform: 'uppercase', background: '#fff', boxShadow: 'none' }}
                   >
                     {item.label}
                   </Button>
@@ -112,7 +112,7 @@ export default function AppNavBar() {
                   color="inherit"
                   component={Link}
                   to="/logout"
-                  style={{ marginLeft: '8px', backgroundColor: '#E71C4F', color: '#fff', fontWeight: 700, textTransform: 'uppercase', borderRadius: 0, boxShadow: 'none', padding: '6px 18px', display: 'flex', alignItems: 'center' }}
+                  style={{ marginLeft: '8px', backgroundColor: '#000', color: '#fff', fontWeight: 400, textTransform: 'uppercase', borderRadius: 0, boxShadow: 'none', padding: '10px 18px', display: 'flex', alignItems: 'center' }}
                 >
                   <LogoutIcon style={{ color: '#fff', marginRight: 8 }} /> Log Out
                 </Button>
