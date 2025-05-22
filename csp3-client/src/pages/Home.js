@@ -2,6 +2,7 @@ import React from 'react';
 import Banner from '../components/Banner';
 import Highlights from '../components/Highlights';
 import { Container, Paper, Typography, Box, Stack } from '@mui/material';
+import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 
 export default function Home() {
   const pageData = {
@@ -18,15 +19,16 @@ export default function Home() {
 
       <Container maxWidth="lg" sx={{ mt: 8 }}>
         <div >
-          <Typography 
-            variant="h4" 
-            align="center" 
-            gutterBottom 
-            fontWeight={600}
-            color="text.primary"
-          >
-            Featured Products
-          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2 }}>
+            
+            <Typography 
+              variant="h4" 
+              fontWeight={600}
+              color="text.primary"
+            >
+              Featured Products
+            </Typography>
+          </Box>
           <Box sx={{ mt: 0 }}>
             <Highlights />
           </Box>
