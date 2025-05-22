@@ -17,14 +17,20 @@ export default function Home() {
       <Banner data={pageData} />
 
       <Container maxWidth="lg" sx={{ mt: 6 }}>
-        <Paper elevation={3} sx={{ p: 4, mb: 6 }}>
-          <Typography variant="h4" align="center" gutterBottom fontWeight={600}>
+        <div >
+          <Typography 
+            variant="h4" 
+            align="center" 
+            gutterBottom 
+            fontWeight={600}
+            color="text.primary"
+          >
             Featured Products
           </Typography>
           <Box sx={{ mt: 4 }}>
             <Highlights />
           </Box>
-        </Paper>
+        </div>
       </Container>
     </React.Fragment>
   );

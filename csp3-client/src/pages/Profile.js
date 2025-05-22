@@ -12,13 +12,11 @@ import {
   Avatar,
   Grid,
   Chip,
-  useTheme,
   useMediaQuery
 } from '@mui/material';
 import {
   Email,
   Phone,
-  Person,
   Security,
   Edit,
   Badge,
@@ -34,14 +32,7 @@ export default function Profile() {
   const [details, setDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const history = useHistory();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-
-  // Color palette
-  const primaryColor = '#003366'; // Deep blue
-  const secondaryColor = '#1976d2'; // Medium blue
-  const accentColor = '#ffc107'; // Gold
-  const lightBg = '#f8fafc';
+  const isMobile = useMediaQuery('(max-width:900px)');
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -66,7 +57,7 @@ export default function Profile() {
             ? 'Your session has expired. Please log in again.' 
             : 'Failed to load profile details. Please try again later.',
           icon: 'error',
-          confirmButtonColor: primaryColor,
+          confirmButtonColor: 'black',
         });
         history.push('/login');
       } finally {
@@ -82,242 +73,219 @@ export default function Profile() {
   }
 
   return (
-    <Container 
-      maxWidth="lg" 
-      sx={{ 
-        py: 6,
-        minHeight: 'calc(100vh - 128px)',
-        display: 'flex',
-        alignItems: 'center'
-      }}
-    >
-      <Paper
-        elevation={isMobile ? 0 : 3}
-        sx={{
-          width: '100%',
-          p: { xs: 3, md: 4 },
-          borderRadius: 4,
-          backgroundColor: lightBg,
-          boxShadow: isMobile ? 'none' : `0 8px 32px rgba(0, 51, 102, 0.1)`,
-          border: isMobile ? 'none' : `1px solid rgba(0, 51, 102, 0.1)`,
-          overflow: 'hidden',
-          position: 'relative',
-          '&:before': {
-            content: '""',
-            position: 'absolute',
-            top: 0,
-            left: 0,
+    <Box sx={{ backgroundColor: '#f5f5f5', minHeight: '100vh', py: 6 }}>
+      <Container maxWidth="lg">
+        <Paper
+          elevation={0}
+          sx={{
             width: '100%',
-            height: '8px',
-            background: `linear-gradient(90deg, ${primaryColor}, ${secondaryColor})`,
-          }
-        }}
-      >
-        {loading ? (
-          <Box 
-            sx={{ 
-              display: 'flex', 
-              justifyContent: 'center', 
-              alignItems: 'center', 
-              minHeight: '300px' 
-            }}
-          >
-            <CircularProgress sx={{ color: primaryColor }} size={60} />
-          </Box>
-        ) : (
-          <Grid container spacing={4}>
-            {/* Profile Section */}
-            <Grid item xs={12} md={4}>
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                  p: 3,
-                  height: '100%',
-                  borderRight: isMobile ? 'none' : `1px solid rgba(0, 51, 102, 0.1)`,
-                }}
-              >
-                <Avatar
+            p: { xs: 3, md: 4 },
+            borderRadius: 0,
+            backgroundColor: 'white',
+            border: '1px solid #e5e5e5',
+            overflow: 'hidden',
+          }}
+        >
+          {loading ? (
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '300px' }}>
+              <Box 
+                sx={{ 
+                  width: 50, 
+                  height: 50, 
+                  border: '3px solid black', 
+                  borderBottomColor: 'transparent', 
+                  borderRadius: '50%', 
+                  animation: 'spin 1s linear infinite',
+                  '@keyframes spin': {
+                    '0%': { transform: 'rotate(0deg)' },
+                    '100%': { transform: 'rotate(360deg)' }
+                  }
+                }} 
+              />
+            </Box>
+          ) : (
+            <Grid container spacing={4}>
+              {/* Profile Section */}
+              <Grid item xs={12} md={4}>
+                <Box
                   sx={{
-                    bgcolor: primaryColor,
-                    width: 120,
-                    height: 120,
-                    mb: 3,
-                    fontSize: 50,
-                    boxShadow: 3,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    p: 3,
+                    height: '100%',
+                    borderRight: isMobile ? 'none' : '1px solid #e5e5e5',
                   }}
                 >
-                  {details?.firstName?.charAt(0).toUpperCase()}
-                </Avatar>
-                
-                <Typography 
-                  variant="h5" 
-                  sx={{ 
-                    fontWeight: 700, 
-                    color: primaryColor,
-                    mb: 1
-                  }}
-                >
-                  {details?.firstName} {details?.lastName}
-                </Typography>
-                
-                <Chip
-                  icon={<Security fontSize="small" />}
-                  label={user.isAdmin ? "Administrator" : "Standard User"}
-                  color={user.isAdmin ? "primary" : "default"}
-                  variant="outlined"
-                  sx={{ 
-                    mb: 3,
-                    borderColor: user.isAdmin ? primaryColor : 'default',
-                    color: user.isAdmin ? primaryColor : 'default'
-                  }}
-                />
-                
-                <Box sx={{ width: '100%' }}>
-                  <Divider sx={{ my: 2, bgcolor: 'rgba(0, 51, 102, 0.1)' }} />
-                  
-                  <Box 
-                    sx={{ 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      mb: 1.5 
+                  <Avatar
+                    sx={{
+                      bgcolor: 'black',
+                      width: 120,
+                      height: 120,
+                      mb: 3,
+                      fontSize: 50,
                     }}
                   >
-                    <Badge sx={{ color: primaryColor, mr: 1.5 }} />
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                      Member since: {new Date(details?.createdAt).toLocaleDateString()}
-                    </Typography>
+                    {details?.firstName?.charAt(0).toUpperCase()}
+                  </Avatar>
+                  
+                  <Typography 
+                    variant="h5" 
+                    sx={{ 
+                      fontWeight: 900, 
+                      color: 'black',
+                      mb: 1,
+                      letterSpacing: 1,
+                      textTransform: 'uppercase'
+                    }}
+                  >
+                    {details?.firstName} {details?.lastName}
+                  </Typography>
+                  
+                  <Chip
+                    icon={<Security fontSize="small" />}
+                    label={user.isAdmin ? "ADMINISTRATOR" : "STANDARD USER"}
+                    variant="outlined"
+                    sx={{ 
+                      mb: 3,
+                      borderColor: 'black',
+                      color: 'black',
+                      fontWeight: 600,
+                      borderRadius: 0,
+                      textTransform: 'uppercase'
+                    }}
+                  />
+                  
+                  <Box sx={{ width: '100%' }}>
+                    <Divider sx={{ my: 2, bgcolor: '#e5e5e5' }} />
+                    
+                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 1.5 }}>
+                      <Badge sx={{ color: 'black', mr: 1.5 }} />
+                      <Typography variant="body2" sx={{ color: '#666' }}>
+                        MEMBER SINCE: {new Date(details?.createdAt).toLocaleDateString()}
+                      </Typography>
+                    </Box>
                   </Box>
                 </Box>
-              </Box>
+              </Grid>
+
+              {/* Details Section */}
+              <Grid item xs={12} md={8}>
+                <Box sx={{ mb: 4 }}>
+                  <Typography 
+                    variant="h6" 
+                    sx={{ 
+                      fontWeight: 900, 
+                      mb: 2, 
+                      color: 'black',
+                      display: 'flex',
+                      alignItems: 'center',
+                      letterSpacing: 1,
+                      textTransform: 'uppercase'
+                    }}
+                  >
+                    <AccountCircle sx={{ mr: 1, color: 'black' }} />
+                    PERSONAL INFORMATION
+                  </Typography>
+                  
+                  <Paper 
+                    elevation={0}
+                    sx={{
+                      p: 3,
+                      borderRadius: 0,
+                      backgroundColor: 'white',
+                      border: '1px solid #e5e5e5'
+                    }}
+                  >
+                    <List disablePadding>
+                      <ListItem 
+                        disablePadding 
+                        sx={{ 
+                          py: 1.5,
+                          borderBottom: '1px solid #e5e5e5'
+                        }}
+                      >
+                        <Email sx={{ color: 'black', mr: 2, fontSize: '1.5rem' }} />
+                        <ListItemText 
+                          primary="EMAIL ADDRESS" 
+                          secondary={details?.email || "Not provided"}
+                          primaryTypographyProps={{ 
+                            sx: { 
+                              fontWeight: 700,
+                              color: 'black',
+                              letterSpacing: 1
+                            } 
+                          }}
+                          secondaryTypographyProps={{ 
+                            sx: { 
+                              color: '#666',
+                              fontSize: '0.95rem'
+                            } 
+                          }}
+                        />
+                      </ListItem>
+                      
+                      <ListItem disablePadding sx={{ py: 1.5 }}>
+                        <Phone sx={{ color: 'black', mr: 2, fontSize: '1.5rem' }} />
+                        <ListItemText 
+                          primary="MOBILE NUMBER" 
+                          secondary={details?.mobileNo || "Not provided"}
+                          primaryTypographyProps={{ 
+                            sx: { 
+                              fontWeight: 700,
+                              color: 'black',
+                              letterSpacing: 1
+                            } 
+                          }}
+                          secondaryTypographyProps={{ 
+                            sx: { 
+                              color: '#666',
+                              fontSize: '0.95rem'
+                            } 
+                          }}
+                        />
+                      </ListItem>
+                    </List>
+                  </Paper>
+                </Box>
+
+                <Divider sx={{ my: 4, bgcolor: '#e5e5e5', height: '2px' }} />
+
+                <Box>
+                  <Typography 
+                    variant="h6" 
+                    sx={{ 
+                      fontWeight: 900, 
+                      mb: 2, 
+                      color: 'black',
+                      display: 'flex',
+                      alignItems: 'center',
+                      letterSpacing: 1,
+                      textTransform: 'uppercase'
+                    }}
+                  >
+                    <Edit sx={{ mr: 1, color: 'black' }} />
+                    ACCOUNT SECURITY
+                  </Typography>
+                  
+                  <Paper 
+                    elevation={0}
+                    sx={{
+                      p: 3,
+                      borderRadius: 0,
+                      backgroundColor: 'white',
+                      border: '1px solid #e5e5e5'
+                    }}
+                  >
+                    <ResetPassword />
+                  </Paper>
+                </Box>
+              </Grid>
             </Grid>
-
-            {/* Details Section */}
-            <Grid item xs={12} md={8}>
-              <Box sx={{ mb: 4 }}>
-                <Typography 
-                  variant="h6" 
-                  sx={{ 
-                    fontWeight: 600, 
-                    mb: 2, 
-                    color: primaryColor,
-                    display: 'flex',
-                    alignItems: 'center'
-                  }}
-                >
-                  <AccountCircle sx={{ mr: 1, color: secondaryColor }} />
-                  Personal Information
-                </Typography>
-                
-                <Paper 
-                  elevation={0}
-                  sx={{
-                    p: 3,
-                    borderRadius: 3,
-                    backgroundColor: 'white',
-                    border: '1px solid rgba(0, 51, 102, 0.1)'
-                  }}
-                >
-                  <List disablePadding>
-                    <ListItem 
-                      disablePadding 
-                      sx={{ 
-                        py: 1.5,
-                        borderBottom: '1px solid rgba(0, 51, 102, 0.05)'
-                      }}
-                    >
-                      <Email sx={{ 
-                        color: secondaryColor, 
-                        mr: 2,
-                        fontSize: '1.5rem'
-                      }} />
-                      <ListItemText 
-                        primary="Email Address" 
-                        secondary={details?.email || "Not provided"}
-                        primaryTypographyProps={{ 
-                          sx: { 
-                            fontWeight: 500,
-                            color: primaryColor
-                          } 
-                        }}
-                        secondaryTypographyProps={{ 
-                          sx: { 
-                            color: 'text.secondary',
-                            fontSize: '0.95rem'
-                          } 
-                        }}
-                      />
-                    </ListItem>
-                    
-                    <ListItem 
-                      disablePadding 
-                      sx={{ py: 1.5 }}
-                    >
-                      <Phone sx={{ 
-                        color: secondaryColor, 
-                        mr: 2,
-                        fontSize: '1.5rem'
-                      }} />
-                      <ListItemText 
-                        primary="Mobile Number" 
-                        secondary={details?.mobileNo || "Not provided"}
-                        primaryTypographyProps={{ 
-                          sx: { 
-                            fontWeight: 500,
-                            color: primaryColor
-                          } 
-                        }}
-                        secondaryTypographyProps={{ 
-                          sx: { 
-                            color: 'text.secondary',
-                            fontSize: '0.95rem'
-                          } 
-                        }}
-                      />
-                    </ListItem>
-                  </List>
-                </Paper>
-              </Box>
-
-              <Divider sx={{ 
-                my: 4, 
-                bgcolor: 'rgba(0, 51, 102, 0.1)',
-                height: '2px'
-              }} />
-
-              <Box>
-                <Typography 
-                  variant="h6" 
-                  sx={{ 
-                    fontWeight: 600, 
-                    mb: 2, 
-                    color: primaryColor,
-                    display: 'flex',
-                    alignItems: 'center'
-                  }}
-                >
-                  <Edit sx={{ mr: 1, color: secondaryColor }} />
-                  Account Security
-                </Typography>
-                
-                <Paper 
-                  elevation={0}
-                  sx={{
-                    p: 3,
-                    borderRadius: 3,
-                    backgroundColor: 'white',
-                    border: '1px solid rgba(0, 51, 102, 0.1)'
-                  }}
-                >
-                  <ResetPassword />
-                </Paper>
-              </Box>
-            </Grid>
-          </Grid>
-        )}
-      </Paper>
-    </Container>
+          )}
+        </Paper>
+      </Container>
+    </Box>
   );
 }

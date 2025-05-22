@@ -22,10 +22,11 @@ const ResetPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
-  // Blue palette variables
-  const blueMain = '#003366';
-  const blueLight = '#1976d2';
-  const blueBg = '#eef3fa';
+  // Black and white palette variables
+  const blackMain = '#000000';
+  const whiteMain = '#ffffff';
+  const grayLight = '#f5f5f5';
+  const grayDark = '#333333';
 
   const handleClose = () => {
     setShowModal(false);
@@ -42,7 +43,9 @@ const ResetPassword = () => {
         icon: 'warning',
         title: 'Missing fields',
         text: 'Please enter both password fields.',
-        confirmButtonColor: blueMain
+        confirmButtonColor: blackMain,
+        background: whiteMain,
+        color: blackMain
       });
       return;
     }
@@ -51,7 +54,9 @@ const ResetPassword = () => {
         icon: 'error',
         title: 'Password Mismatch',
         text: 'The entered passwords do not match. Please try again.',
-        confirmButtonColor: blueMain
+        confirmButtonColor: blackMain,
+        background: whiteMain,
+        color: blackMain
       });
       return;
     }
@@ -75,7 +80,9 @@ const ResetPassword = () => {
           icon: 'success',
           title: 'Password Reset Successful!',
           text: 'Your password has been successfully reset.',
-          confirmButtonColor: blueMain
+          confirmButtonColor: blackMain,
+          background: whiteMain,
+          color: blackMain
         });
         handleClose();
       })
@@ -85,7 +92,9 @@ const ResetPassword = () => {
           icon: 'error',
           title: 'Password Reset Failed',
           text: 'An error occurred while resetting your password. Please try again.',
-          confirmButtonColor: blueMain
+          confirmButtonColor: blackMain,
+          background: whiteMain,
+          color: blackMain
         });
       });
   };
@@ -95,36 +104,48 @@ const ResetPassword = () => {
       <Button
         variant="contained"
         sx={{
-          background: blueMain,
+          background: blackMain,
+          color: whiteMain,
           fontWeight: 700,
-          borderRadius: 3,
+          borderRadius: 0,
           px: 3,
           py: 1,
-          boxShadow: 2,
+          boxShadow: 'none',
+          textTransform: 'uppercase',
+          letterSpacing: 1,
+          border: `1px solid ${blackMain}`,
           '&:hover': {
-            background: blueLight
+            background: grayDark,
+            borderColor: grayDark
           }
         }}
-        startIcon={<LockResetIcon />}
+        startIcon={<LockResetIcon sx={{ color: whiteMain }} />}
         onClick={handleShow}
       >
-        RESET PASSWORD
+        Reset Password
       </Button>
 
-      <Dialog open={showModal} onClose={handleClose} maxWidth="xs" fullWidth>
+      <Dialog open={showModal} onClose={handleClose} maxWidth="xs" fullWidth PaperProps={{
+        sx: {
+          borderRadius: 0,
+          border: `1px solid ${blackMain}`
+        }
+      }}>
         <DialogTitle
           sx={{
-            color: blueMain,
+            color: blackMain,
             fontWeight: 700,
             textAlign: 'center',
             letterSpacing: 1,
             pb: 0,
+            backgroundColor: grayLight,
+            borderBottom: `1px solid ${blackMain}`
           }}
         >
-          Reset Password
+          RESET PASSWORD
         </DialogTitle>
-        <DialogContent>
-          <Stack spacing={3} mt={1}>
+        <DialogContent sx={{ backgroundColor: whiteMain }}>
+          <Stack spacing={3} mt={3}>
             <TextField
               label="New Password"
               type={showPassword ? 'text' : 'password'}
@@ -139,17 +160,23 @@ const ResetPassword = () => {
                       aria-label={showPassword ? "Hide password" : "Show password"}
                       onClick={() => setShowPassword(show => !show)}
                       edge="end"
-                      sx={{ color: blueMain }}
+                      sx={{ color: blackMain }}
                     >
                       {showPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </InputAdornment>
-                )
+                ),
+                sx: {
+                  borderRadius: 0,
+                  backgroundColor: grayLight
+                }
               }}
               sx={{
-                '& label.Mui-focused': { color: blueLight },
+                '& label': { color: grayDark },
+                '& label.Mui-focused': { color: blackMain },
                 '& .MuiOutlinedInput-root': {
-                  '&.Mui-focused fieldset': { borderColor: blueLight },
+                  '& fieldset': { borderColor: blackMain },
+                  '&.Mui-focused fieldset': { borderColor: blackMain },
                 },
               }}
             />
@@ -173,33 +200,48 @@ const ResetPassword = () => {
                       aria-label={showConfirm ? "Hide password" : "Show password"}
                       onClick={() => setShowConfirm(show => !show)}
                       edge="end"
-                      sx={{ color: blueMain }}
+                      sx={{ color: blackMain }}
                     >
                       {showConfirm ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </InputAdornment>
-                )
+                ),
+                sx: {
+                  borderRadius: 0,
+                  backgroundColor: grayLight
+                }
               }}
               sx={{
-                '& label.Mui-focused': { color: blueLight },
+                '& label': { color: grayDark },
+                '& label.Mui-focused': { color: blackMain },
                 '& .MuiOutlinedInput-root': {
-                  '&.Mui-focused fieldset': { borderColor: blueLight },
+                  '& fieldset': { borderColor: blackMain },
+                  '&.Mui-focused fieldset': { borderColor: blackMain },
                 },
               }}
             />
           </Stack>
         </DialogContent>
-        <DialogActions sx={{ justifyContent: 'space-between', px: 3, pb: 2 }}>
+        <DialogActions sx={{ 
+          justifyContent: 'space-between', 
+          px: 3, 
+          pb: 2,
+          backgroundColor: grayLight,
+          borderTop: `1px solid ${blackMain}`
+        }}>
           <Button
             onClick={handleClose}
             variant="outlined"
             sx={{
-              color: blueMain,
-              borderColor: blueMain,
+              color: blackMain,
+              borderColor: blackMain,
               fontWeight: 700,
+              borderRadius: 0,
+              textTransform: 'uppercase',
+              letterSpacing: 1,
               '&:hover': {
-                borderColor: blueLight,
-                background: blueBg
+                borderColor: grayDark,
+                backgroundColor: whiteMain
               }
             }}
           >
@@ -209,16 +251,19 @@ const ResetPassword = () => {
             onClick={handleResetPassword}
             variant="contained"
             sx={{
-              background: blueLight,
-              color: '#fff',
+              backgroundColor: blackMain,
+              color: whiteMain,
               fontWeight: 700,
               px: 4,
+              borderRadius: 0,
+              textTransform: 'uppercase',
+              letterSpacing: 1,
               '&:hover': {
-                background: blueMain
+                backgroundColor: grayDark
               }
             }}
           >
-            Reset Password
+            Reset
           </Button>
         </DialogActions>
       </Dialog>

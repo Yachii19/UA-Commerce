@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Container, Typography } from '@mui/material';
+import { Grid, Container, Typography, Box } from '@mui/material';
 import Product from '../components/Product';
 import ProductSearch from './ProductSearch';
 
@@ -30,14 +30,37 @@ export default function CustomerView() {
   }, []);
 
   return (
-    <Container maxWidth="xl" sx={{ py: 4 }}>
-      <ProductSearch />
-      <Typography variant="h4" component="h2" gutterBottom align="center" sx={{ mb: 4 }}>
-        UA Shop Products
-      </Typography>
-      <Grid container spacing={3}>
-        {products}
-      </Grid>
-    </Container>
+    <Box sx={{minHeight: '100vh' }}>
+      <Container maxWidth="xl" sx={{ py: 4 }}>
+        <ProductSearch />
+        <Typography 
+          variant="h4" 
+          component="h2" 
+          gutterBottom 
+          align="center" 
+          sx={{ 
+            mb: 4,
+            fontWeight: 700,
+            color: 'black',
+            letterSpacing: 1,
+            textTransform: 'uppercase',
+            position: 'relative',
+            '&::after': {
+              content: '""',
+              display: 'block',
+              width: '80px',
+              height: '2px',
+              backgroundColor: 'black',
+              margin: '16px auto 0'
+            }
+          }}
+        >
+          UA Shop Products
+        </Typography>
+        <Grid container spacing={3}>
+          {products}
+        </Grid>
+      </Container>
+    </Box>
   );
 }

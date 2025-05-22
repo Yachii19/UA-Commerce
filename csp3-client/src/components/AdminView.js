@@ -28,6 +28,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 
+// Helper for SweetAlert2 config
+const swalCenter = (options) => Swal.fire({
+  position: 'center',
+  ...options
+});
+
 export default function AdminView() {
   const { user } = useContext(UserContext);
   const [products, setProducts] = useState([]);
@@ -126,20 +132,18 @@ export default function AdminView() {
       .then(res => res.json())
       .then(data => {
         if (data?._id) {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Product successfully added.",
+          swalCenter({
+            icon: 'success',
+            title: 'Product successfully added.',
             showConfirmButton: false,
             timer: 1500,
           });
           closeAdd();
           fetchProducts();
         } else {
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: data?.error || "Something went wrong.",
+          swalCenter({
+            icon: 'error',
+            title: data?.error || 'Something went wrong.',
             showConfirmButton: false,
             timer: 1500,
           });
@@ -165,20 +169,18 @@ export default function AdminView() {
       .then(res => res.json())
       .then(data => {
         if (data.message === 'Product updated successfully') {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Product successfully updated.",
+          swalCenter({
+            icon: 'success',
+            title: 'Product successfully updated.',
             showConfirmButton: false,
             timer: 1500,
           });
           closeEdit();
           fetchProducts();
         } else {
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: data?.error || "Something went wrong.",
+          swalCenter({
+            icon: 'error',
+            title: data?.error || 'Something went wrong.',
             showConfirmButton: false,
             timer: 1500,
           });
@@ -196,19 +198,17 @@ export default function AdminView() {
       .then(res => res.json())
       .then(data => {
         if (data.message === 'Product activated successfully') {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Product successfully activated.",
+          swalCenter({
+            icon: 'success',
+            title: 'Product successfully activated.',
             showConfirmButton: false,
             timer: 1500,
           });
           fetchProducts();
         } else {
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: data?.error || "Something went wrong.",
+          swalCenter({
+            icon: 'error',
+            title: data?.error || 'Something went wrong.',
             showConfirmButton: false,
             timer: 1500,
           });
@@ -226,19 +226,17 @@ export default function AdminView() {
       .then(res => res.json())
       .then(data => {
         if (data.message === 'Product archived successfully') {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Product successfully archived",
+          swalCenter({
+            icon: 'success',
+            title: 'Product successfully archived',
             showConfirmButton: false,
             timer: 1500,
           });
           fetchProducts();
         } else {
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: data?.error || "Something went wrong.",
+          swalCenter({
+            icon: 'error',
+            title: data?.error || 'Something went wrong.',
             showConfirmButton: false,
             timer: 1500,
           });
@@ -249,73 +247,128 @@ export default function AdminView() {
   const toggler = () => setToggle((toggle) => !toggle);
 
   return (
-    <div style={{ padding: '24px' }}>
+    <div style={{ padding: '24px'}}>
       <Grid container justifyContent="space-between" alignItems="center" sx={{ mb: 4 }}>
         <Grid item>
-          <Typography variant="h4" component="h2" color="primary">
-            Admin Dashboard
+          <Typography variant="h4" component="h2" sx={{ fontWeight: 700, color: 'black' }}>
+            ADMIN DASHBOARD
           </Typography>
         </Grid>
         <Grid item>
           <Button
             variant="contained"
-            color="primary"
             startIcon={<AddIcon />}
             onClick={openAdd}
-            sx={{ mr: 2 }}
+            sx={{ 
+              mr: 2,
+              backgroundColor: 'black',
+              color: 'white',
+              borderRadius: 0,
+              '&:hover': {
+                backgroundColor: '#333'
+              }
+            }}
           >
-            Add Product
+            ADD PRODUCT
           </Button>
           <Button
             variant={toggle ? "outlined" : "contained"}
-            color="secondary"
             onClick={toggler}
+            sx={{
+              borderRadius: 0,
+              borderColor: 'black',
+              color: toggle ? 'black' : 'white',
+              backgroundColor: toggle ? 'transparent' : 'black',
+              '&:hover': {
+                backgroundColor: toggle ? '#f5f5f5' : '#333',
+                borderColor: 'black'
+              }
+            }}
           >
-            {toggle ? "Show Products" : "Show Orders"}
+            {toggle ? "SHOW PRODUCTS" : "SHOW ORDERS"}
           </Button>
         </Grid>
       </Grid>
 
       {!toggle ? (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} elevation={0} sx={{ border: '1px solid #e0e0e0' }}>
           <Table>
-            <TableHead sx={{ backgroundColor: '#003366' }}>
+            <TableHead sx={{ backgroundColor: 'black' }}>
               <TableRow>
-                <TableCell sx={{ color: 'white' }}>Product</TableCell>
-                <TableCell sx={{ color: 'white' }}>Description</TableCell>
-                <TableCell sx={{ color: 'white' }}>Price</TableCell>
-                <TableCell sx={{ color: 'white' }}>Status</TableCell>
-                <TableCell sx={{ color: 'white' }}>Actions</TableCell>
+                <TableCell sx={{ color: 'white', fontWeight: 600 }}>PRODUCT</TableCell>
+                <TableCell sx={{ color: 'white', fontWeight: 600 }}>DESCRIPTION</TableCell>
+                <TableCell sx={{ color: 'white', fontWeight: 600 }}>PRICE</TableCell>
+                <TableCell sx={{ color: 'white', fontWeight: 600 }}>STATUS</TableCell>
+                <TableCell sx={{ color: 'white', fontWeight: 600 }}>ACTIONS</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {products.map((product) => (
-                <TableRow key={product._id}>
+                <TableRow 
+                  key={product._id}
+                  sx={{ 
+                    '&:hover': {
+                      backgroundColor: '#f9f9f9'
+                    } 
+                  }}
+                >
                   <TableCell>
-                    <Link to={`/products/${product._id}`} style={{ textDecoration: 'none', color: '#003366' }}>
+                    <Link 
+                      to={`/products/${product._id}`} 
+                      style={{ 
+                        textDecoration: 'none', 
+                        color: 'black',
+                        fontWeight: 600
+                      }}
+                    >
                       {product.name}
                     </Link>
                   </TableCell>
-                  <TableCell>{product.description}</TableCell>
-                  <TableCell>₱{Number(product.price).toLocaleString()}</TableCell>
+                  <TableCell sx={{ color: '#666' }}>{product.description}</TableCell>
+                  <TableCell sx={{ fontWeight: 600 }}>₱{Number(product.price).toLocaleString()}</TableCell>
                   <TableCell>
                     {product.isActive ? (
-                      <CheckCircleIcon color="success" />
+                      <CheckCircleIcon sx={{ color: 'black' }} />
                     ) : (
-                      <CancelIcon color="error" />
+                      <CancelIcon sx={{ color: '#999' }} />
                     )}
                   </TableCell>
                   <TableCell>
                     <Stack direction="row">
-                      <IconButton color="primary" onClick={() => openEdit(product._id)}>
+                      <IconButton 
+                        onClick={() => openEdit(product._id)}
+                        sx={{ 
+                          color: 'black',
+                          '&:hover': {
+                            backgroundColor: '#f0f0f0'
+                          }
+                        }}
+                      >
                         <EditIcon />
                       </IconButton>
                       {product.isActive ? (
-                        <IconButton color="error" onClick={() => archiveProduct(product._id)}>
+                        <IconButton 
+                          onClick={() => archiveProduct(product._id)}
+                          sx={{ 
+                            color: '#999',
+                            '&:hover': {
+                              color: 'black',
+                              backgroundColor: '#f0f0f0'
+                            }
+                          }}
+                        >
                           <DeleteIcon />
                         </IconButton>
                       ) : (
-                        <IconButton color="success" onClick={() => activateProduct(product._id)}>
+                        <IconButton 
+                          onClick={() => activateProduct(product._id)}
+                          sx={{ 
+                            color: 'black',
+                            '&:hover': {
+                              backgroundColor: '#f0f0f0'
+                            }
+                          }}
+                        >
                           <CheckCircleIcon />
                         </IconButton>
                       )}
@@ -330,57 +383,79 @@ export default function AdminView() {
         <div>
           {ordersList.length > 0 ? (
             ordersList.map((order) => (
-              <Paper key={order._id} sx={{ mb: 3, p: 2, borderLeft: "5px solid #FFD700" }}>
-                <Typography variant="h6" color="primary">
-                  Orders for user <span style={{ color: '#FFD700' }}>{order.userId}</span>
+              <Paper 
+                key={order._id} 
+                elevation={0}
+                sx={{ 
+                  mb: 3, 
+                  p: 2, 
+                  borderLeft: "3px solid black",
+                  backgroundColor: 'white',
+                  border: '1px solid #e0e0e0'
+                }}
+              >
+                <Typography variant="h6" sx={{ fontWeight: 700, mb: 1 }}>
+                  ORDER FOR USER: <span style={{ color: '#666' }}>{order.userId}</span>
                 </Typography>
                 {order.productsOrdered && order.productsOrdered.length > 0 ? (
                   order.productsOrdered.map((product) => (
                     <div key={product._id}>
-                      <Typography variant="body1">
-                        Purchased on {moment(order.orderedOn).format("MM-DD-YYYY")}:
+                      <Typography variant="body1" sx={{ color: '#666' }}>
+                        PURCHASED ON {moment(order.orderedOn).format("MM-DD-YYYY")}:
                       </Typography>
-                      <ul style={{ margin: 0 }}>
-                        <li>
-                          {product.productName} - Quantity: {product.quantity}
+                      <ul style={{ margin: 0, paddingLeft: '20px' }}>
+                        <li style={{ color: '#333' }}>
+                          {product.productName} - QUANTITY: {product.quantity}
                         </li>
                       </ul>
-                      <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                        Total: <span style={{ color: '#FFD700' }}>₱{order.totalPrice}</span>
+                      <Typography variant="body2" sx={{ fontWeight: 700, mt: 1 }}>
+                        TOTAL: <span style={{ color: 'black' }}>₱{order.totalPrice}</span>
                       </Typography>
-                      <hr />
+                      <hr style={{ borderColor: '#e0e0e0', margin: '16px 0' }} />
                     </div>
                   ))
                 ) : (
-                  <Typography variant="body2">No orders for this user yet.</Typography>
+                  <Typography variant="body2" sx={{ color: '#666' }}>
+                    NO ORDERS FOR THIS USER YET.
+                  </Typography>
                 )}
               </Paper>
             ))
           ) : (
-            <Typography variant="body1" sx={{ textAlign: 'center', my: 4 }}>
-              No orders found.
+            <Typography 
+              variant="body1" 
+              sx={{ 
+                textAlign: 'center', 
+                my: 4,
+                color: '#666'
+              }}
+            >
+              NO ORDERS FOUND.
             </Typography>
           )}
         </div>
       )}
 
       {/* Add Product Dialog */}
-      <Dialog open={showAdd} onClose={closeAdd} fullWidth maxWidth="sm">
-        <DialogTitle>Add New Product</DialogTitle>
-        <DialogContent>
+      <Dialog open={showAdd} onClose={closeAdd} fullWidth maxWidth="sm" PaperProps={{ sx: { borderRadius: 0 } }}>
+        <DialogTitle sx={{ fontWeight: 700, backgroundColor: 'black', color: 'white' }}>
+          ADD NEW PRODUCT
+        </DialogTitle>
+        <DialogContent sx={{ pt: 3 }}>
           <TextField
             autoFocus
             margin="dense"
-            label="Product Name"
+            label="PRODUCT NAME"
             fullWidth
             variant="outlined"
             value={name}
             onChange={(e) => setName(e.target.value)}
             sx={{ mb: 2 }}
+            InputLabelProps={{ sx: { fontWeight: 600 } }}
           />
           <TextField
             margin="dense"
-            label="Description"
+            label="DESCRIPTION"
             fullWidth
             variant="outlined"
             multiline
@@ -388,51 +463,80 @@ export default function AdminView() {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             sx={{ mb: 2 }}
+            InputLabelProps={{ sx: { fontWeight: 600 } }}
           />
           <TextField
             margin="dense"
-            label="Price"
+            label="PRICE"
             type="number"
             fullWidth
             variant="outlined"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             sx={{ mb: 2 }}
+            InputLabelProps={{ sx: { fontWeight: 600 } }}
           />
           <TextField
             margin="dense"
-            label="Image URL"
+            label="IMAGE URL"
             fullWidth
             variant="outlined"
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
+            InputLabelProps={{ sx: { fontWeight: 600 } }}
           />
         </DialogContent>
-        <DialogActions>
-          <Button onClick={closeAdd}>Cancel</Button>
-          <Button onClick={addProduct} variant="contained" color="primary">
-            Add Product
+        <DialogActions sx={{ p: 2 }}>
+          <Button 
+            onClick={closeAdd}
+            sx={{
+              color: 'black',
+              fontWeight: 600,
+              '&:hover': {
+                backgroundColor: '#f5f5f5'
+              }
+            }}
+          >
+            CANCEL
+          </Button>
+          <Button 
+            onClick={addProduct} 
+            variant="contained"
+            sx={{
+              backgroundColor: 'black',
+              color: 'white',
+              borderRadius: 0,
+              fontWeight: 600,
+              '&:hover': {
+                backgroundColor: '#333'
+              }
+            }}
+          >
+            ADD PRODUCT
           </Button>
         </DialogActions>
       </Dialog>
 
       {/* Edit Product Dialog */}
-      <Dialog open={showEdit} onClose={closeEdit} fullWidth maxWidth="sm">
-        <DialogTitle>Edit Product</DialogTitle>
-        <DialogContent>
+      <Dialog open={showEdit} onClose={closeEdit} fullWidth maxWidth="sm" PaperProps={{ sx: { borderRadius: 0 } }}>
+        <DialogTitle sx={{ fontWeight: 700, backgroundColor: 'black', color: 'white' }}>
+          EDIT PRODUCT
+        </DialogTitle>
+        <DialogContent sx={{ pt: 3 }}>
           <TextField
             autoFocus
             margin="dense"
-            label="Product Name"
+            label="PRODUCT NAME"
             fullWidth
             variant="outlined"
             value={name}
             onChange={(e) => setName(e.target.value)}
             sx={{ mb: 2 }}
+            InputLabelProps={{ sx: { fontWeight: 600 } }}
           />
           <TextField
             margin="dense"
-            label="Description"
+            label="DESCRIPTION"
             fullWidth
             variant="outlined"
             multiline
@@ -440,30 +544,56 @@ export default function AdminView() {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             sx={{ mb: 2 }}
+            InputLabelProps={{ sx: { fontWeight: 600 } }}
           />
           <TextField
             margin="dense"
-            label="Price"
+            label="PRICE"
             type="number"
             fullWidth
             variant="outlined"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             sx={{ mb: 2 }}
+            InputLabelProps={{ sx: { fontWeight: 600 } }}
           />
           <TextField
             margin="dense"
-            label="Image URL"
+            label="IMAGE URL"
             fullWidth
             variant="outlined"
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
+            InputLabelProps={{ sx: { fontWeight: 600 } }}
           />
         </DialogContent>
-        <DialogActions>
-          <Button onClick={closeEdit}>Cancel</Button>
-          <Button onClick={(e) => editProduct(e, id)} variant="contained" color="primary">
-            Save Changes
+        <DialogActions sx={{ p: 2 }}>
+          <Button 
+            onClick={closeEdit}
+            sx={{
+              color: 'black',
+              fontWeight: 600,
+              '&:hover': {
+                backgroundColor: '#f5f5f5'
+              }
+            }}
+          >
+            CANCEL
+          </Button>
+          <Button 
+            onClick={(e) => editProduct(e, id)} 
+            variant="contained"
+            sx={{
+              backgroundColor: 'black',
+              color: 'white',
+              borderRadius: 0,
+              fontWeight: 600,
+              '&:hover': {
+                backgroundColor: '#333'
+              }
+            }}
+          >
+            SAVE CHANGES
           </Button>
         </DialogActions>
       </Dialog>

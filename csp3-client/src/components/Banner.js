@@ -1,49 +1,84 @@
 import React from 'react';
-import { Container, Paper, Typography, Button, Box, Stack } from '@mui/material';
+import { Container, Typography, Button, Box, Stack } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 export default function Banner({ data }) {
   const { title, content, destination, label } = data;
 
   return (
-    <Container maxWidth="md" sx={{ mt: 6, mb: 6 }}>
-      <Paper
-        elevation={6}
+    <Container 
+      maxWidth={false} 
+      sx={{
+        backgroundColor: 'black',
+        color: 'white',
+        py: 10,
+        mb: 4,
+        position: 'relative',
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundImage: 'linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7))',
+        }
+      }}
+    >
+      <Stack 
+        alignItems="center" 
+        spacing={2}
+        position="relative" // makes it appear above the pseudo-element
         sx={{
-          p: { xs: 4, md: 7 },
-          background: "linear-gradient(90deg, #1976d2 0%, #42a5f5 100%)",
-          color: "#fff",
-          borderRadius: 4,
-          textAlign: "center"
+          maxWidth: '800px',
+          mx: 'auto',
+          textAlign: 'center',
+          px: 2
         }}
       >
-        <Stack spacing={3} alignItems="center">
-          <Typography variant="h2" fontWeight={700} sx={{ fontSize: { xs: "2.3rem", md: "3rem" } }}>
-            {title}
-          </Typography>
-          <Typography variant="h5" fontWeight={400} id="motto" sx={{ opacity: 0.95 }}>
-            {content}
-          </Typography>
-          <Box>
-            <Button
-              variant="contained"
-              color="secondary"
-              size="large"
-              component={Link}
-              to={destination}
-              sx={{
-                px: 5,
-                py: 1.5,
-                fontWeight: 600,
-                fontSize: "1.2rem",
-                boxShadow: 3
-              }}
-            >
-              {label}
-            </Button>
-          </Box>
-        </Stack>
-      </Paper>
+        <Typography 
+          variant="h2" 
+          component="h1"
+          sx={{
+            fontWeight: 700,
+            fontSize: { xs: '2rem', md: '3rem' },
+            letterSpacing: 1
+          }}
+        >
+          {title}
+        </Typography>
+        
+        <Typography 
+          variant="subtitle1"
+          sx={{
+            fontWeight: 400,
+            fontSize: { xs: '1rem', md: '1.25rem' },
+            mb: 2
+          }}
+        >
+          {content}
+        </Typography>
+        
+        <Button
+          component={Link}
+          to={destination}
+          variant="contained"
+          sx={{
+            backgroundColor: '#E71C4F',
+            color: 'white',
+            borderRadius: 0,
+            px: 4,
+            py: 1.5,
+            fontWeight: 600,
+            fontSize: '1rem',
+            '&:hover': {
+              backgroundColor: '#e0e0e0',
+            }
+          }}
+        >
+          {label}
+        </Button>
+      </Stack>
     </Container>
   );
 }

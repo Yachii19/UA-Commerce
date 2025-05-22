@@ -80,118 +80,236 @@ const ProductSearch = () => {
     setError(null);
   };
 
-    return (
-    <Container maxWidth="md" sx={{ py: 4 }}>
-      <Typography variant="h4" align="center" gutterBottom sx={{ fontWeight: 600 }}>
-        Product Search
-      </Typography>
-      
-      <Paper sx={{ p: 3, mb: 4 }}>
-        <Stack spacing={2}>
-          <TextField
-            fullWidth
-            label="Search by Product Name"
-            variant="outlined"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-
-          <Stack direction={{ xs: "column", sm: "row" }} spacing={2} alignItems="center" justifyContent="center">
-            <Typography variant="subtitle1" sx={{ minWidth: 80 }}>
-              Price Range
-            </Typography>
-            <Box display="flex" alignItems="center">
-              <IconButton onClick={() => setMinPrice(Math.max(minPrice - 100, 0))}>
-                <RemoveIcon />
-              </IconButton>
-              <TextField
-                label="Min"
-                type="number"
-                value={minPrice}
-                onChange={(e) => setMinPrice(Number(e.target.value))}
-                sx={{ mx: 1, width: 100 }}
-                size="small"
-              />
-              <IconButton onClick={() => setMinPrice(minPrice + 100)}>
-                <AddIcon />
-              </IconButton>
-            </Box>
-            <Typography variant="subtitle1" sx={{ mx: 1 }}>
-              to
-            </Typography>
-            <Box display="flex" alignItems="center">
-              <IconButton onClick={() => setMaxPrice(Math.max(maxPrice - 100, minPrice + 100))}>
-                <RemoveIcon />
-              </IconButton>
-              <TextField
-                label="Max"
-                type="number"
-                value={maxPrice}
-                onChange={(e) => setMaxPrice(Number(e.target.value))}
-                sx={{ mx: 1, width: 100 }}
-                size="small"
-              />
-              <IconButton onClick={() => setMaxPrice(maxPrice + 100)}>
-                <AddIcon />
-              </IconButton>
-            </Box>
-          </Stack>
-
-          <Stack direction={{ xs: "column", sm: "row" }} spacing={2} justifyContent="center">
-            <Button 
-              variant="contained" 
-              onClick={handleSearchByName}
-            >
-              Search by Name
-            </Button>
-            <Button 
-              variant="contained" 
-              onClick={handleSearchByPrice}
-            >
-              Search by Price
-            </Button>
-            <Button 
-              variant="outlined" 
-              startIcon={<ClearIcon />}
-              onClick={handleClear}
-            >
-              Clear
-            </Button>
-          </Stack>
-        </Stack>
-      </Paper>
-      
-      {error && (
-        <Typography color="error" sx={{ mb: 2 }} align="center">
-          {error}
+  return (
+    <div style={{minHeight: '30vh', padding: '20px 0'}}>
+      <Container maxWidth="md">
+        <Typography 
+          variant="h4" 
+          align="center" 
+          gutterBottom 
+          sx={{ 
+            fontWeight: 900,
+            color: 'black',
+            letterSpacing: 1,
+            textTransform: 'uppercase',
+            mb: 4
+          }}
+        >
+          Product Search
         </Typography>
-      )}
-      
-      {searchResults !== null && (
-        <>
-          <Typography variant="h6" gutterBottom align="center">
-            Search Results
+        
+        <Paper 
+          elevation={0} 
+          sx={{ 
+            p: 3, 
+            mb: 4,
+            backgroundColor: 'white',
+            borderRadius: 0,
+            border: '1px solid #e5e5e5'
+          }}
+        >
+          <Stack spacing={3}>
+            <TextField
+              fullWidth
+              label="Search by Product Name"
+              variant="outlined"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: 0,
+                  '& fieldset': {
+                    borderColor: 'black',
+                  },
+                },
+              }}
+            />
+
+            <Stack direction={{ xs: "column", sm: "row" }} spacing={2} alignItems="center" justifyContent="center">
+              <Typography variant="subtitle1" sx={{ minWidth: 80, color: '#666' }}>
+                Price Range
+              </Typography>
+              <Box display="flex" alignItems="center">
+                <IconButton 
+                  onClick={() => setMinPrice(Math.max(minPrice - 100, 0))}
+                  sx={{ color: 'black' }}
+                >
+                  <RemoveIcon />
+                </IconButton>
+                <TextField
+                  label="Min"
+                  type="number"
+                  value={minPrice}
+                  onChange={(e) => setMinPrice(Number(e.target.value))}
+                  sx={{ 
+                    mx: 1, 
+                    width: 100,
+                    '& .MuiOutlinedInput-root': {
+                      borderRadius: 0,
+                      '& fieldset': {
+                        borderColor: 'black',
+                      },
+                    },
+                  }}
+                  size="small"
+                />
+                <IconButton 
+                  onClick={() => setMinPrice(minPrice + 100)}
+                  sx={{ color: 'black' }}
+                >
+                  <AddIcon />
+                </IconButton>
+              </Box>
+              <Typography variant="subtitle1" sx={{ mx: 1, color: '#666' }}>
+                to
+              </Typography>
+              <Box display="flex" alignItems="center">
+                <IconButton 
+                  onClick={() => setMaxPrice(Math.max(maxPrice - 100, minPrice + 100))}
+                  sx={{ color: 'black' }}
+                >
+                  <RemoveIcon />
+                </IconButton>
+                <TextField
+                  label="Max"
+                  type="number"
+                  value={maxPrice}
+                  onChange={(e) => setMaxPrice(Number(e.target.value))}
+                  sx={{ 
+                    mx: 1, 
+                    width: 100,
+                    '& .MuiOutlinedInput-root': {
+                      borderRadius: 0,
+                      '& fieldset': {
+                        borderColor: 'black',
+                      },
+                    },
+                  }}
+                  size="small"
+                />
+                <IconButton 
+                  onClick={() => setMaxPrice(maxPrice + 100)}
+                  sx={{ color: 'black' }}
+                >
+                  <AddIcon />
+                </IconButton>
+              </Box>
+            </Stack>
+
+            <Stack direction={{ xs: "column", sm: "row" }} spacing={2} justifyContent="center">
+              <Button 
+                variant="outlined" 
+                onClick={handleSearchByName}
+                sx={{
+                  color: 'black',
+                  borderColor: 'black',
+                  borderRadius: 0,
+                  fontWeight: 600,
+                  '&:hover': {
+                    backgroundColor: 'black',
+                    color: 'white',
+                    borderColor: 'black'
+                  }
+                }}
+              >
+                Search by Name
+              </Button>
+              <Button 
+                variant="outlined" 
+                onClick={handleSearchByPrice}
+                sx={{
+                  color: 'black',
+                  borderColor: 'black',
+                  borderRadius: 0,
+                  fontWeight: 600,
+                  '&:hover': {
+                    backgroundColor: 'black',
+                    color: 'white',
+                    borderColor: 'black'
+                  }
+                }}
+              >
+                Search by Price
+              </Button>
+              <Button 
+                variant="outlined" 
+                startIcon={<ClearIcon />}
+                onClick={handleClear}
+                sx={{
+                  color: 'black',
+                  borderColor: 'black',
+                  borderRadius: 0,
+                  fontWeight: 600,
+                  '&:hover': {
+                    backgroundColor: 'black',
+                    color: 'white',
+                    borderColor: 'black'
+                  }
+                }}
+              >
+                Clear
+              </Button>
+            </Stack>
+          </Stack>
+        </Paper>
+        
+        {error && (
+          <Typography 
+            color="error" 
+            sx={{ 
+              mb: 2, 
+              textAlign: 'center',
+              fontWeight: 600
+            }}
+          >
+            {error}
           </Typography>
-          {searchResults.length === 0 ? (
-            <Card sx={{ maxWidth: 400, mx: "auto" }}>
-              <CardContent>
-                <Typography align="center">
-                  No matching products found
-                </Typography>
-              </CardContent>
-            </Card>
-          ) : (
-            <Grid container spacing={3}>
-              {searchResults.map(product => (
-                <Grid item xs={12} sm={6} md={4} key={product._id}>
-                  <Product data={product} />
-                </Grid>
-              ))}
-            </Grid>
-          )}
-        </>
-      )}
-    </Container>
+        )}
+        
+        {searchResults !== null && (
+          <>
+            <Typography 
+              variant="h6" 
+              gutterBottom 
+              align="center"
+              sx={{
+                fontWeight: 700,
+                color: 'black',
+                textTransform: 'uppercase',
+                letterSpacing: 1,
+                mb: 3
+              }}
+            >
+              Search Results
+            </Typography>
+            {searchResults.length === 0 ? (
+              <Card 
+                sx={{ 
+                  maxWidth: 400, 
+                  mx: "auto",
+                  borderRadius: 0,
+                  border: '1px solid #e5e5e5'
+                }}
+              >
+                <CardContent>
+                  <Typography align="center" color="#666">
+                    No matching products found
+                  </Typography>
+                </CardContent>
+              </Card>
+            ) : (
+              <Grid container spacing={3}>
+                {searchResults.map(product => (
+                  <Grid item xs={12} sm={6} md={4} key={product._id}>
+                    <Product data={product} />
+                  </Grid>
+                ))}
+              </Grid>
+            )}
+          </>
+        )}
+      </Container>
+    </div>
   );
 };
 

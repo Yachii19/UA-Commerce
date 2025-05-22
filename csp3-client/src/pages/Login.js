@@ -13,7 +13,6 @@ import {
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
-
 import UserContext from '../UserContext';
 
 export default function LoginForm(props) {
@@ -43,22 +42,25 @@ export default function LoginForm(props) {
           retrieveUserDetails(data.access);
 
           Swal.fire({
-            title: 'Login Successfully',
-            icon: 'success'
+            title: 'Login Successful',
+            icon: 'success',
+            confirmButtonColor: '#000'
           });
         } else {
           Swal.fire({
-            title: data.error || 'User not found',
+            title: data.error || 'Authentication Failed',
             icon: 'error',
-            text: data.message || 'Authentication failed. Please check your login details and try again.',
+            text: data.message || 'Please check your login details and try again.',
+            confirmButtonColor: '#000'
           });
         }
       })
       .catch((err) => {
         Swal.fire({
-          title: 'Network error',
+          title: 'Network Error',
           icon: 'error',
-          text: err.message || 'Please try again later.'
+          text: err.message || 'Please try again later.',
+          confirmButtonColor: '#000'
         });
       });
   }
@@ -88,30 +90,66 @@ export default function LoginForm(props) {
   }
 
   return (
-    <Container maxWidth="sm" sx={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <Paper elevation={6} sx={{ width: '100%', p: { xs: 3, sm: 5 }, mt: 7 }}>
-        <Typography variant="h4" align="center" gutterBottom fontWeight={700}>
-          Log In
+    <Container 
+      maxWidth="sm" 
+      sx={{ 
+        minHeight: '80vh', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center',
+      }}
+    >
+      <Paper 
+        elevation={0}
+        sx={{ 
+          width: '100%', 
+          p: { xs: 3, sm: 5 }, 
+          border: '1px solid #e0e0e0',
+          borderRadius: 0
+        }}
+      >
+        <Typography 
+          variant="h4" 
+          align="center" 
+          gutterBottom 
+          sx={{
+            fontWeight: 700,
+            color: 'black',
+            letterSpacing: 1,
+            textTransform: 'uppercase'
+          }}
+        >
+          LOG IN
         </Typography>
         <Box component="form" onSubmit={authenticate}>
           <Stack spacing={3}>
             <TextField
-              label="Email"
+              label="EMAIL"
               type="email"
               variant="outlined"
               value={email}
               onChange={e => setEmail(e.target.value)}
               required
               fullWidth
+              sx={{
+                '& .MuiInputLabel-root': {
+                  fontWeight: 600
+                }
+              }}
             />
             <TextField
-              label="Password"
+              label="PASSWORD"
               type={showPassword ? "text" : "password"}
               variant="outlined"
               value={password}
               onChange={e => setPassword(e.target.value)}
               required
               fullWidth
+              sx={{
+                '& .MuiInputLabel-root': {
+                  fontWeight: 600
+                }
+              }}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -119,6 +157,12 @@ export default function LoginForm(props) {
                       aria-label={showPassword ? "Hide password" : "Show password"}
                       onClick={() => setShowPassword((show) => !show)}
                       edge="end"
+                      sx={{
+                        color: 'black',
+                        '&:hover': {
+                          backgroundColor: '#e0e0e0'
+                        }
+                      }}
                     >
                       {showPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
@@ -128,22 +172,44 @@ export default function LoginForm(props) {
             />
             <Button
               variant="contained"
-              color="primary"
               type="submit"
               size="large"
-              sx={{ fontWeight: 600 }}
               fullWidth
+              sx={{ 
+                backgroundColor: 'black',
+                color: 'white',
+                borderRadius: 0,
+                fontWeight: 600,
+                letterSpacing: 1,
+                py: 1.5,
+                '&:hover': {
+                  backgroundColor: '#333'
+                }
+              }}
             >
-              Submit
+              SUBMIT
             </Button>
           </Stack>
         </Box>
-        <Typography align="center" sx={{ mt: 3 }}>
+        <Typography 
+          align="center" 
+          sx={{ 
+            mt: 3,
+            color: '#666'
+          }}
+        >
           Don't have an account yet?{' '}
-          <Link to="/register" style={{ textDecoration: 'none', color: '#1976d2', fontWeight: 500 }}>
-            Click here
-          </Link>{' '}
-          to register.
+          <Link 
+            to="/register" 
+            style={{ 
+              textDecoration: 'none', 
+              color: 'black',
+              fontWeight: 600,
+              borderBottom: '1px solid black'
+            }}
+          >
+            Register here
+          </Link>
         </Typography>
       </Paper>
     </Container>
