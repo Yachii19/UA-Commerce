@@ -16,7 +16,7 @@ export default function Home() {
       {/* Assuming Banner returns a hero/jumbotron-like component */}
       <Banner data={pageData} />
 
-      <Container maxWidth="lg" sx={{ mt: 6 }}>
+      <Container maxWidth="lg" sx={{ mt: 8 }}>
         <div >
           <Typography 
             variant="h4" 
@@ -27,7 +27,7 @@ export default function Home() {
           >
             Featured Products
           </Typography>
-          <Box sx={{ mt: 4 }}>
+          <Box sx={{ mt: 0 }}>
             <Highlights />
           </Box>
         </div>

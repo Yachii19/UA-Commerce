@@ -5,6 +5,20 @@
   font-family: "Inter", sans-serif;
 }
 
+.banner-container{
+  /* border: 1px solid red; */
+  height: 500px;
+  display: flex;
+  align-items: center;
+  background-image: url('./images/UA_BG_COLORED.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  object-fit: cover;
+  background-size: cover;
+  color: #fff;
+}
+
+
 .card1 {
   min-height: 100%;
 }
@@ -70,6 +84,9 @@ input[type=number] {
 .App-link {
   color: #61dafb;
 }
+
+
+
 
 @keyframes App-logo-spin {
   from {

@@ -47,7 +47,7 @@ export default function AppNavBar() {
         ];
 
   return (
-    <AppBar position="static" style={{ backgroundColor: '#000', boxShadow: 'none', borderBottom: '1.5px solid #000' }}>
+    <AppBar position="static" style={{ backgroundColor: '#000', boxShadow: 'none', }}>
       <Container>
         <Toolbar>
           <Typography variant="h6" component={Link} to="/" style={{ flexGrow: 1, color: '#fff', textDecoration: 'none', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
